@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cup by Cup — Cafe Reviews</title>
+
+<!-- Fonts: a warm serif for headings, a clean sans for body text -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+  /* ============================================
+     1. COLORS & BASICS
+     Change these values to change the whole site's palette.
+     ============================================ */
+  :root {
+    --espresso: #2b1d16;     /* dark background */
+    --espresso-light: #3c2a1f; /* card background */
+    --cream: #f3ead9;        /* light text on dark bg */
+    --gold: #d1a441;         /* accent color - ratings, links, highlights */
+    --clay: #b66b4c;         /* secondary accent */
+    --line: #52402f;         /* subtle border color */
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--espresso);
+    color: var(--cream);
+    font-family: 'Karla', sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--gold);
+  }
+
+  /* ============================================
+     2. HEADER / HERO SECTION
+     ============================================ */
+  header {
+    padding: 90px 20px 70px;
+    text-align: center;
+    border-bottom: 1px solid var(--line);
+  }
+
+  header .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  header h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+
+  header p {
+    max-width: 500px;
+    margin: 0 auto;
+    color: #cbb89a;
+    font-size: 1.05rem;
+  }
+
+  /* ============================================
+     3. FILTER / NAV BAR
+     A simple row of tags. Purely decorative for now —
+     doesn't filter anything, but makes the page feel real.
+     To make these actually work you'd need JavaScript,
+     which is a step beyond this template.
+     ============================================ */
+  .filters {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    padding: 30px 20px;
+  }
+
+  .filters span {
+    border: 1px solid var(--line);
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    color: #cbb89a;
+  }
+
+  .filters span.active {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* ============================================
+     4. REVIEW CARDS GRID
+     Each review is one .card block. Copy/paste a whole
+     .card div in the HTML below to add a new review.
+     ============================================ */
+  .reviews {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px 20px 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+  }
+
+  .card {
+    background-color: var(--espresso-light);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .card .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card h3 {
+    font-size: 1.3rem;
+  }
+
+  .card .location {
+    font-size: 0.85rem;
+    color: #a58a68;
+    margin-top: 4px;
+  }
+
+  /* Cup rating — filled cups vs empty cups out of 5 */
+  .cups {
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .cups .empty {
+    color: var(--line);
+  }
+
+  .card .review-text {
+    color: #e3d5bc;
+    font-size: 0.95rem;
+    flex-grow: 1;
+  }
+
+  .card .order {
+    font-size: 0.85rem;
+    color: var(--clay);
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+  }
+
+  .card .order strong {
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .card .date {
+    font-size: 0.75rem;
+    color: #77624a;
+  }
+
+  /* ============================================
+     5. FOOTER
+     ============================================ */
+  footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: #77624a;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header>
+    <div class="eyebrow">A personal project</div>
+    <h1>Cup by Cup</h1>
+    <p>One person's honest, occasionally over-caffeinated reviews of cafes worth visiting — and a few worth skipping.</p>
+  </header>
+
+  <!-- ============ FILTER TAGS (decorative) ============ -->
+  <div class="filters">
+    <span class="active">All</span>
+    <span>Espresso</span>
+    <span>Pour Over</span>
+    <span>Work-Friendly</span>
+    <span>Pastries</span>
+  </div>
+
+  <!-- ============ REVIEW CARDS ============ -->
+  <!-- To add a new review: copy everything from the opening
+       <div class="card"> to the closing </div> just below it,
+       and paste it right after. Then edit the text inside. -->
+  <section class="reviews">
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>Marigold Coffee</h3>
+          <div class="location">Fillmore District</div>
+        </div>
+        <div class="cups">☕☕☕☕<span class="empty">☕</span></div>
+      </div>
+      <p class="review-text">
+        Bright, citrusy single-origin pour over and genuinely comfortable
+        chairs — rare combination. Gets loud after 10am so come early if
+        you want to actually hear yourself think.
+      </p>
+      <div class="order"><strong>Order this:</strong> Kenyan pour over</div>
+      <div class="date">Visited July 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>Blackwood & Co.</h3>
+          <div class="location">Downtown</div>
+        </div>
+        <div class="cups">☕☕☕<span class="empty">☕☕</span></div>
+      </div>
+      <p class="review-text">
+        Beautiful space, moody lighting, great for a first date. The
+        espresso is fine but not the reason to go. Come for the vibe,
+        not the coffee.
+      </p>
+      <div class="order"><strong>Order this:</strong> Oat milk cortado</div>
+      <div class="date">Visited June 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>The Daily Grind</h3>
+          <div class="location">Riverside</div>
+        </div>
+        <div class="cups">☕☕☕☕☕</div>
+      </div>
+      <p class="review-text">
+        My actual favorite. Small, family-run, the owner remembers your
+        order after two visits. Their cardamom bun alone is worth the
+        drive across town.
+      </p>
+      <div class="order"><strong>Order this:</strong> Cortado + cardamom bun</div>
+      <div class="date">Visited August 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>Northline Roasters</h3>
+          <div class="location">Old Mill Road</div>
+        </div>
+        <div class="cups">☕☕<span class="empty">☕☕☕</span></div>
+      </div>
+      <p class="review-text">
+        Great beans, questionable execution. My latte was scalded twice
+        in a row. Buying their bagged beans to brew at home instead of
+        ordering in-cafe.
+      </p>
+      <div class="order"><strong>Order this:</strong> Bag of beans, to go</div>
+      <div class="date">Visited May 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>Fern & Filter</h3>
+          <div class="location">Green Valley</div>
+        </div>
+        <div class="cups">☕☕☕☕<span class="empty">☕</span></div>
+      </div>
+      <p class="review-text">
+        Plant-filled, quiet, plenty of outlets — my go-to for working
+        remotely for a few hours. Wifi is solid and nobody rushes you
+        off a table.
+      </p>
+      <div class="order"><strong>Order this:</strong> Iced oat latte</div>
+      <div class="date">Visited April 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="top-row">
+        <div>
+          <h3>Steep House</h3>
+          <div class="location">Harbor District</div>
+        </div>
+        <div class="cups">☕☕☕<span class="empty">☕☕</span></div>
+      </div>
+      <p class="review-text">
+        Mostly a tea house that happens to serve coffee, and it shows.
+        Worth a visit for the matcha, less so for espresso drinks.
+      </p>
+      <div class="order"><strong>Order this:</strong> Hojicha latte</div>
+      <div class="date">Visited March 2026</div>
+    </div>
+
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    Made with too much coffee. Last updated August 2026.
+  </footer>
+
+</body>
+</html>
